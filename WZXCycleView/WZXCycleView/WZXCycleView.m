@@ -78,9 +78,19 @@
 
 - (void)scrollViewAddImgView:(NSArray *)imgArr {
     for (int i = 0; i < imgArr.count + 2; i++) {
-        UIImageView * imgView = [[UIImageView alloc]initWithFrame:CGRectMake(i * self.frame.size.width, 0, self.frame.size.width, self.frame.size.height)];
-        imgView.image = [UIImage imageNamed:_imgArr[i]];
+        UIButton * imgView = [UIButton buttonWithType:UIButtonTypeCustom];
+        imgView.frame = CGRectMake(i * self.frame.size.width, 0, self.frame.size.width, self.frame.size.height);
+        [imgView setBackgroundImage:[UIImage imageNamed:_imgArr[i]] forState:UIControlStateNormal];;
+        imgView.tag = 10000 + i;
+        imgView.userInteractionEnabled = YES;
+        [imgView addTarget:self action:@selector(imgClick:) forControlEvents:UIControlEventTouchUpInside];
         [_scrollView addSubview:imgView];
+    }
+}
+
+- (void)imgClick:(UIImageView *)sender {
+    if (self.clickBlock) {
+        self.clickBlock(sender.tag - 10000);
     }
 }
 
@@ -124,7 +134,6 @@
 }
 
 - (void)cycleShow {
-    NSLog(@"开始%ld",_currentNum);
     _currentNum++;
     if (_currentNum >= _imgArr.count){
         _currentNum = 2;
@@ -139,8 +148,6 @@
             [self scrollToNum:1];
         }
     }
-
-    NSLog(@"结束%ld",_currentNum);
 }
 
 - (void)scrollAnimationToNum:(NSInteger)num {

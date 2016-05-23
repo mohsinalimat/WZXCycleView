@@ -74,6 +74,8 @@
  *
  *  @param time interval
  */
+@property(nonatomic,copy)void(^clickBlock)(NSInteger tag);
+
 - (void)startWithTimeInterval:(NSTimeInterval)time;
 - (void)stop;
 @end

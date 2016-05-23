@@ -18,6 +18,9 @@
     [super viewDidLoad];
     WZXCycleView * view = [WZXCycleView WZXCycleViewWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 200) imgArr:@[@"1.jpg",@"2.jpg",@"3.jpg"] TitleArr:@[@"冰与火之歌(1)",@"冰与火之歌(2)",@"冰与火之歌(3)"] pageType:WZXPageTypeRight];
     [view startWithTimeInterval:2];
+    [view setClickBlock:^(NSInteger tag) {
+        NSLog(@"%ld",tag);
+    }];
     [self.view addSubview:view];
 }
 
